@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    image: postgres:15.5
+    restart: always
+    container_name: server
+    ports:
+      - "5532:5432"
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: SoccerGameDB
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
