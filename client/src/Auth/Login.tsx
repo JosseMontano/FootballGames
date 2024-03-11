@@ -14,11 +14,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaLogin } from "./Validations/Validations";
 import { LoginDTO } from "./Dtos/login";
-import Input from "../Global/components/Input";
+import Input from "../Global/components/input";
 import BtnRedirect from "../Global/components/BtnRedirect";
 import BtnForm from "../Global/components/BtnForm";
 import FormComponent from "../Global/components/Form";
 import BtnLoader from "../Global/components/BtnLoader";
+import { loginService } from "./Services/login";
+import { UseRouter } from "../Global/hooks/useRouter";
+import { Toaster, toast } from "react-hot-toast";
 
 function Login() {
   const {
@@ -48,9 +51,15 @@ function Login() {
 
   let msgBtnForm = "Iniciar sesion";
 
+  const { redirect } = UseRouter();
+
   const handleLogin = async (data: LoginDTO) => {
     setLoader(true);
-    console.log(data);
+    const res = await loginService(data);
+    const thereIsToken = res.data.token;
+    if (thereIsToken) {
+      redirect("/dashboard");
+    } else toast.error(res.message, { duration: 3000 });
     setLoader(false);
 
     /*    try {
@@ -270,6 +279,8 @@ function Login() {
           </div>
         </div>
       </section>
+
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }

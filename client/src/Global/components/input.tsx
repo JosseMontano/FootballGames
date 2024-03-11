@@ -1,5 +1,5 @@
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import styles from "./text.module.css";
+
 
 interface Props {
   error: FieldError | undefined;
