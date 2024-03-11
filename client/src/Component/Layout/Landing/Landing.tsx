@@ -3,6 +3,14 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
+import MexicoImg from "../../../assets/Landing/mexico.png";
+import BoliviaImg from "../../../assets/Landing/bolivia.png";
+import ArgentinaImg from "../../../assets/Landing/argentina.png";
+import ItaliaImg from "../../../assets/Landing/italia.png";
+import PortadaImg from "../../../assets/Landing/portada.png";
+import PlayerImg from "../../../assets/Landing/lampe.jpg";
+import { UseRouter } from "../../../Global/hooks/useRouter";
+
 const navigation = [
   { name: "Example1", href: "#" },
   { name: "Example2", href: "#" },
@@ -12,6 +20,8 @@ const navigation = [
 
 export default function Landing() {
   const navigate = useNavigate();
+
+  const { redirect } = UseRouter();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const handleLoginClick = () => {
@@ -315,58 +325,119 @@ export default function Landing() {
       </header>
 
       <div className="relative isolate px-6 lg:px-8">
-        <div
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-          />
-        </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-25">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              React Mania with Tailwind
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Welcome to React Mania with Tailwind! This is a demo showcasing
-              the power of React with Tailwind CSS. With this combination, you
-              can create beautiful, responsive, and performant web applications
-              with ease. Explore the different components and features in this
-              demo and see how you can use them in your own projects. Happy
-              coding!
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                onClick={() => handleLoginClick()}
-                className="cursor-pointer rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started
-              </a>
-              <a
-                href="#"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </a>
+        <div className="flex flex-col space-y-2 p-2">
+          <div className="flex space-x-2 w-full mt-16">
+            <div className="w-7/10 md:w-1/2">
+              <img
+                className="w-full h-96 md:h-72 sm:h-48 object-cover rounded-lg"
+                src={PortadaImg}
+                alt="portada"
+              />
+            </div>
+
+            <div className="grid space-y-2 place-content-center w-3/10 md:w-1/2 h-72 bg-gray-800 rounded-lg">
+              <div className="text-center">
+                <h4 className="text-xl text-cyan-50">Partido en vivo</h4>
+                <p className="text-cyan-50">62:24</p>
+              </div>
+              <div className="flex justify-center items-center space-x-2">
+                <img
+                  className="rounded-full w-12 h-12"
+                  src={MexicoImg}
+                  alt=""
+                />
+                <p className="flex justify-center space-x-1 bg-purple-300 p-2 rounded-lg text-purple-700 w-12 text-center font-bold">
+                  <span>2</span> <span>-</span> <span>2</span>
+                </p>
+                <img
+                  className="rounded-full w-12 h-12"
+                  src={BoliviaImg}
+                  alt=""
+                />
+              </div>
+              <div className="text-center">
+                <div>
+                  <h5 className="text-cyan-50">Goles</h5>
+                  <p className="text-cyan-50">7 - 4</p>
+                </div>
+                <div>
+                  <h5 className="text-cyan-50">Faltas</h5>
+                  <p className="text-cyan-50">3 - 2</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-          />
+
+          <div className="w-full flex flex-col space-y-2">
+            <div>
+              <h3 className="text-2xl">Partidos de futbol</h3>
+            </div>
+
+            <div className="flex space-x-2">
+              <p className="text-lg cursor-pointer border-b-2 border-purple-700">
+                Ultimos partidos
+              </p>
+              <p className="text-lg cursor-pointer">Futuros partidos</p>
+            </div>
+
+            <table className="w-full">
+              <tbody>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+                  <tr>
+                    <td className="align-top">
+                      <div className="flex items-center space-x-2">
+                        <img
+                          className="w-6 h-6 rounded-full"
+                          src={ArgentinaImg}
+                          alt=""
+                        />
+                        <p>Argentina</p>
+                      </div>
+                    </td>
+                    <td className="align-top">
+                      <p className="bg-purple-300 p-2 rounded-lg text-purple-700 w-12 text-center font-bold">
+                        1-2
+                      </p>
+                    </td>
+                    <td className="align-top">
+                      <div className="flex items-center space-x-2">
+                        <img
+                          className="w-6 h-6 rounded-full"
+                          src={ItaliaImg}
+                          alt=""
+                        />
+                        <p>Italia</p>
+                      </div>
+                    </td>
+                    <td className="align-top">
+                      <p className="bg-red-800 p-1 rounded text-red-500  text-center font-bold">
+                        10 diciembre 2022
+                      </p>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div>
+              <h2>Jugadores</h2>
+
+              <select
+                className="bg-gray-800 text-white p-1 rounded-lg text-lg font-bold"
+                name="cars"
+                id="cars"
+              >
+                <option value="volvo">Lampe</option>
+                <option value="saab">Cristiano</option>
+                <option value="mercedes">Messi</option>
+                <option value="audi">Maradona</option>
+              </select>
+            </div>
+
+            {/*     <TableComponents cols={cols} ShowJSX={ShowJSX} /> */}
+          </div>
         </div>
       </div>
     </div>
