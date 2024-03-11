@@ -32,7 +32,7 @@ const TableComponent = ({
   }
 
   return (
-    <table className="min-w-full divide-y divide-gray-200">
+    <table className="min-w-full divide-y divide-gray-200 my-3">
       <thead className="bg-gray-50">
         <tr>
           {columnsTable.map((column, index) => (

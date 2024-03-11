@@ -36,7 +36,7 @@ namespace server.Controllers
 
             db.Teams.Add(team);
             db.SaveChanges();
-            return res.SuccessResponse(Messages.Team.CREATED, body);
+            return res.SuccessResponse(Messages.Team.CREATED, team);
         }
 
         [HttpPut("{id}")]

@@ -17,7 +17,7 @@ const FormComponent = ({
       </h1>
       <form
         onSubmit={handleSubmit(handleForm)}
-        className="space-y-4 md:space-y-6"
+        className="space-y-4 md:space-y-3"
         action="#"
       >
         {children}

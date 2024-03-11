@@ -7,7 +7,7 @@ import MobileNumberLogin from "../Auth/MobileNumberLogin";
 import DefaultLayout from "../Layout/DefaultLayout";
 import Dashboard from "../Component/Pages/Dashboard/Dashboard";
 import NotFound from "../Component/Pages/NotFound/NotFound";
-import Instagram from "../Component/Pages/Instagram/Instagram";
+import Player from "../Component/Pages/Player/Player";
 import Amazon from "../Component/Pages/Amazon/Amazon";
 import BookMyShow from "../Component/Pages/BookMyShow/BookMyShow";
 import Whatsapp from "../Component/Pages/Whatsapp/Whatsapp";
@@ -48,8 +48,8 @@ const routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "instagram",
-        element: <Instagram />,
+        path: "player",
+        element: <Player />,
       },
       {
         path: "amazon",

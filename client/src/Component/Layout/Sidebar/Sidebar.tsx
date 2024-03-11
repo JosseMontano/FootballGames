@@ -6,7 +6,7 @@ const Sidebar = () => {
   const SIDEBAR_TABS = [
     { name: "Titular", path: "/titular" },
     { name: "Instagram", path: "/instagram" },
-    { name: "Amazon", path: "/amazon" },
+    { name: "Jugador", path: "/player" },
     { name: "Book my show", path: "/bookmyshow" },
     { name: "Whatsapp", path: "/whatsapp" },
     { name: "Netflix", path: "/netflix" },

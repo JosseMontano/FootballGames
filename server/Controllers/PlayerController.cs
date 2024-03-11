@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Constants;
 using server.Data;
 using server.Dtos;
@@ -25,7 +26,7 @@ namespace server.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var players = db.Players;
+            var players = db.Players.Include(v=>v.Team).ToList();
             return res.SuccessResponse(Messages.Player.FOUND, players);
         }
         [HttpPost]
@@ -45,7 +46,7 @@ namespace server.Controllers
 
             db.Players.Add(player);
             db.SaveChanges();
-            return res.SuccessResponse(Messages.Player.CREATED, body);
+            return res.SuccessResponse(Messages.Player.CREATED, player);
         }
         [HttpPut("{id}")]
         public IActionResult Update(int id, PlayerDto body)

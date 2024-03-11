@@ -5,7 +5,7 @@ import UseModal from "../../../Global/hooks/useModal";
 import { PersonDTO } from "./Dto/Person";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaCreatePerson } from "./Validations/FormCreatPerson";
-import Input from "../../../Global/components/Input";
+import Input from "../../../Global/components/input";
 import BtnBasic from "../../../Global/components/BtnBasic";
 import TableComponent from "../../../Global/components/Table";
 import { ReactNode } from "react";

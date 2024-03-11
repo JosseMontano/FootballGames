@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using server.Data;
@@ -63,6 +64,11 @@ builder.Services.AddCors(options =>
 
 });
 //? end: cors
+
+//? start: fix do whiles
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//? end: fix do whiles
 
 var app = builder.Build();
 

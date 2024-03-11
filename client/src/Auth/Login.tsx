@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaLogin } from "./Validations/Validations";
 import { LoginDTO } from "./Dtos/login";
-import Input from "../Global/components/input";
+import Input from "../Global/components/Input";
 import BtnRedirect from "../Global/components/BtnRedirect";
 import BtnForm from "../Global/components/BtnForm";
 import FormComponent from "../Global/components/Form";
