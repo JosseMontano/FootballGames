@@ -11,7 +11,7 @@ export const PlayerFormSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/, "La fecha debe estar en formato AAAA-MM-DD"),
   cellphone: z
     .string()
-    .min(10, "El teléfono móvil debe tener al menos 10 dígitos"),
+    .min(8, "El teléfono móvil debe tener al menos 8 dígitos"),
   /*   photo: z.string().url("La foto debe ser una URL válida"), */
   age: z
     .string()

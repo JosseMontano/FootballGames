@@ -3,10 +3,12 @@ import { ReactNode } from "react";
 interface Props {
   bodyTableJSX(): ReactNode;
   columnsTable: string[];
+  showOperations?: boolean;
 }
 const TableComponent = ({
   bodyTableJSX,
   columnsTable,
+  showOperations = true,
 }: Props) => {
   return (
     <table className="min-w-full divide-y divide-gray-200 my-3">
@@ -20,9 +22,11 @@ const TableComponent = ({
               {column}
             </th>
           ))}
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Operations
-          </th>
+          {showOperations && (
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Operaciones
+            </th>
+          )}
         </tr>
       </thead>
 

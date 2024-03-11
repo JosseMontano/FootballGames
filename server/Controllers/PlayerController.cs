@@ -38,6 +38,14 @@ namespace server.Controllers
             return res.SuccessResponse(Messages.Player.FOUND, player);
         }
 
+        [HttpGet("teamId/{id}")]
+        public IActionResult GetTeam(int id)
+        {
+            var players = db.Players.Include(v=>v.Team).Where(v => v.Teamid == id).ToList();
+            if (players == null) return res.NotFoundResponse(Messages.Player.NOTFOUND);
+            return res.SuccessResponse(Messages.Player.FOUND, players);
+        }
+
         [HttpPost]
         public IActionResult Create(PlayerDto body)
         {

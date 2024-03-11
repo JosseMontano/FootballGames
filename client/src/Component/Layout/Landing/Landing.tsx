@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,12 @@ import ItaliaImg from "../../../assets/Landing/italia.png";
 import PortadaImg from "../../../assets/Landing/portada.png";
 import PlayerImg from "../../../assets/Landing/lampe.jpg";
 import { UseRouter } from "../../../Global/hooks/useRouter";
+import useFetch from "../../../Global/hooks/UseFetch";
+import { getTeams } from "../../../Shared/Services/Team";
+import { TeamResType } from "../../../Shared/Interfaces/Team";
+import TableComponent from "../../../Global/components/Table";
+import { getPlayerToTeam } from "../../../Shared/Services/Player";
+import { PlayerResType } from "../../Pages/Player/Res/PlayerRes";
 
 const navigation = [
   { name: "Example1", href: "#" },
@@ -28,9 +34,65 @@ export default function Landing() {
     navigate("/login");
   };
 
+  const [TeamId, setTeamId] = useState(1);
+  const handleChangeTeam = (id: number) => {
+    setTeamId(id);
+  };
+
+  const { data: teamsData } = useFetch<TeamResType>({ services: getTeams }); //get teams
+  const { data: playerTeam } = useFetch<PlayerResType>({
+    services: getPlayerToTeam,
+    id: TeamId,
+  }); //get players
+  const columnsTable = [
+    "CI",
+    "Nombres",
+    "Apellidos",
+    "Fecha de nacimiento",
+    "Celular",
+    "Edad",
+    "Equipo",
+  ];
+
+  const bodyTableJSX = () => {
+    return playerTeam?.map((player) => (
+      <tr>
+        <td>{player.ci}</td>
+        <td>{player.names}</td>
+        <td>{player.lastnames}</td>
+        <td>{player.date}</td>
+        <td>{player.cellphone}</td>
+        <td>{player.age}</td>
+        <td>{player.team.name}</td>
+      </tr>
+    ));
+  };
+
+  //scroll data
+
+  const [isTop, setIsTop] = useState(true);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      setIsTop(window.scrollY === 0);
+      console.log(window.scrollY === 0);
+    };
+
+    // Check scroll position on initial render
+    checkScroll();
+
+    // Set up event listener
+    window.addEventListener("scroll", checkScroll);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+    };
+  }, []);
+
   return (
     <div className="bg-white">
-      <header className=" inset-x-0 top-0 z-50 fixed">
+      <header className={`inset-x-0 top-0 z-50 fixed ${!isTop ? 'bg-white' : 'bg-transparent'}`}>
         <nav
           className="flex items-center justify-between p-6 lg:px-8"
           aria-label="Global"
@@ -422,21 +484,29 @@ export default function Landing() {
 
           <div>
             <div>
-              <h2>Jugadores</h2>
+              <h2>Equipos</h2>
 
               <select
-                className="bg-gray-800 text-white p-1 rounded-lg text-lg font-bold"
-                name="cars"
-                id="cars"
+                className="bg-white text-gray-800 p-1 rounded-lg text-lg font-bold cursor-pointer"
+                name="teams"
               >
-                <option value="volvo">Lampe</option>
-                <option value="saab">Cristiano</option>
-                <option value="mercedes">Messi</option>
-                <option value="audi">Maradona</option>
+                {teamsData.map((item) => (
+                  <option
+                    onClick={() => handleChangeTeam(item.id)}
+                    value={item.id}
+                  >
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
 
             {/*     <TableComponents cols={cols} ShowJSX={ShowJSX} /> */}
+            <TableComponent
+              bodyTableJSX={bodyTableJSX}
+              columnsTable={columnsTable}
+              showOperations={false}
+            />
           </div>
         </div>
       </div>

@@ -31,15 +31,6 @@ const Player = () => {
   });
 
   //table
-  const columnsTable = [
-    "CI",
-    "Nombres",
-    "Apellidos",
-    "Fecha de nacimiento",
-    "Celular",
-    "Edad",
-    "Equipo",
-  ];
 
   //body table
   const { data: players, fetchData: getDataPlayers } = useFetch<PlayerResType>({
@@ -64,6 +55,16 @@ const Player = () => {
     setPlayer(player);
     handleOpenModal();
   };
+
+  const columnsTable = [
+    "CI",
+    "Nombres",
+    "Apellidos",
+    "Fecha de nacimiento",
+    "Celular",
+    "Edad",
+    "Equipo",
+  ];
 
   const bodyTableJSX = () => {
     return players.map((player) => (
