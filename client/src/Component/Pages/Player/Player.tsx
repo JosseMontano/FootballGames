@@ -17,7 +17,7 @@ import BtnLoader from "../../../Global/components/BtnLoader";
 import { ReactNode, useState } from "react";
 import TableComponent from "../../../Global/components/Table";
 import { PlayerResType } from "./Res/PlayerRes";
-import FormPlayer from "./Components/Form";
+import FormPlayer from "./Components/FormPlayer";
 
 const Player = () => {
   const { handleOpenModal, ShowModalJSX, handleCloseModal } = UseModal();
@@ -59,10 +59,10 @@ const Player = () => {
   };
 
   //edit
-const [ player, setPlayer ] = useState({} as PlayerResType)
+  const [player, setPlayer] = useState({} as PlayerResType);
   const handleEdit = (player: PlayerResType) => {
-   setPlayer(player);
-   handleOpenModal();
+    setPlayer(player);
+    handleOpenModal();
   };
 
   const bodyTableJSX = () => {
@@ -93,10 +93,10 @@ const [ player, setPlayer ] = useState({} as PlayerResType)
     ));
   };
 
-  const handleCreatePlayer = ()=>{
+  const handleCreatePlayer = () => {
     setPlayer({} as PlayerResType);
     handleOpenModal();
-  }
+  };
 
   return (
     <>
@@ -104,7 +104,11 @@ const [ player, setPlayer ] = useState({} as PlayerResType)
 
       {ShowModalJSX(
         <>
-          <FormPlayer handleCloseModal={handleCloseModal} player={player} />
+          <FormPlayer
+            handleCloseModal={handleCloseModal}
+            player={player}
+            getDataPlayers={getDataPlayers}
+          />
         </>
       )}
 

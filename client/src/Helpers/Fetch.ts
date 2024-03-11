@@ -64,7 +64,7 @@ export const getData = async <T>(
   };
 };
 
-//do the delete
+
 export const deleteData = async <T>(
   url: string,
 ): Promise<ResType<T>> => {
@@ -93,5 +93,37 @@ export const deleteData = async <T>(
     status: status,
     message: msg,
     data: json as T,
+  };
+};
+
+
+export const putData = async <T, R>(
+  url: string,
+  data: T
+): Promise<ResType<R>> => {
+  let status = 500;
+  let msg = "Error Interno";
+  let json = {} as R;
+
+  try {
+    const response = await fetch(endPoint + url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const res = await response.json();
+    status = res.status;
+    msg = res.message;
+    json = res.data;
+  } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+  }
+  return {
+    status: status,
+    message: msg,
+    data: json as R,
   };
 };

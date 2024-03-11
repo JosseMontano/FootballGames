@@ -59,12 +59,14 @@ function classNames(...classes: any) {
 }
 
 const SIDEBAR_TABS = [
-  { name: "Titular", path: "/titular" },
-  { name: "Instagram", path: "/instagram" },
+  { name: "Equipo", path: "/team" },
   { name: "Jugador", path: "/player" },
+/*   { name: "Titular", path: "/titular" },
+  { name: "Instagram", path: "/instagram" },
+
   { name: "Book my show", path: "/bookmyshow" },
   { name: "Whatsapp", path: "/whatsapp" },
-  { name: "Netflix", path: "/netflix" },
+  { name: "Netflix", path: "/netflix" }, */
 ];
 
 const Header = () => {

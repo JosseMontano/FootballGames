@@ -8,7 +8,7 @@ import DefaultLayout from "../Layout/DefaultLayout";
 import Dashboard from "../Component/Pages/Dashboard/Dashboard";
 import NotFound from "../Component/Pages/NotFound/NotFound";
 import Player from "../Component/Pages/Player/Player";
-import Amazon from "../Component/Pages/Amazon/Amazon";
+import Team from "../Component/Pages/Team/Team";
 import BookMyShow from "../Component/Pages/BookMyShow/BookMyShow";
 import Whatsapp from "../Component/Pages/Whatsapp/Whatsapp";
 import Person from "../Component/Pages/Person/Person";
@@ -52,10 +52,10 @@ const routes = createBrowserRouter([
         element: <Player />,
       },
       {
-        path: "amazon",
-        element: <Amazon />,
+        path: "team",
+        element: <Team />,
       },
-      {
+/*       {
         path: "bookmyshow",
         element: <BookMyShow />,
       },
@@ -66,7 +66,7 @@ const routes = createBrowserRouter([
       {
         path: "titular",
         element: <Person />,
-      },
+      }, */
     ],
   },
   {

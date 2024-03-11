@@ -18,9 +18,10 @@ import { PlayerResType } from "../Res/PlayerRes";
 interface Props {
   handleCloseModal: () => void;
   player: PlayerResType;
+  getDataPlayers: () => Promise<void>
 }
-const FormPlayer = ({ handleCloseModal, player }: Props) => {
-  console.log(player);
+const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
+
 
   const {
     register,
@@ -39,6 +40,7 @@ const FormPlayer = ({ handleCloseModal, player }: Props) => {
     const res = await PostPlayer(data);
     console.log(res);
     if (res.status == 200) {
+      await getDataPlayers()
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();
     } else toast.error(res.message, { duration: 3000 });
