@@ -29,6 +29,15 @@ namespace server.Controllers
             var players = db.Players.Include(v=>v.Team).ToList();
             return res.SuccessResponse(Messages.Player.FOUND, players);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var player = db.Players.Include(v=>v.Team).FirstOrDefault(v => v.Id == id);
+            if (player == null) return res.NotFoundResponse(Messages.Player.NOTFOUND);
+            return res.SuccessResponse(Messages.Player.FOUND, player);
+        }
+
         [HttpPost]
         public IActionResult Create(PlayerDto body)
         {

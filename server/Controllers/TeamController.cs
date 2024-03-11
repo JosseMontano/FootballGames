@@ -26,6 +26,14 @@ namespace server.Controllers
             return res.SuccessResponse(Messages.Team.FOUND, teams);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var team = db.Teams.Find(id);
+            if (team == null) return res.NotFoundResponse(Messages.Team.NOTFOUND);
+            return res.SuccessResponse(Messages.Team.FOUND, team);
+        }
+
         [HttpPost]
         public IActionResult Create(TeamDto body)
         {

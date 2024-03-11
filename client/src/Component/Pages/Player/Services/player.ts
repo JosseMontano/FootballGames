@@ -1,4 +1,4 @@
-import { getData, postData } from "../../../../Helpers/Fetch";
+import { deleteData, getData, postData } from "../../../../Helpers/Fetch";
 import { PlayerResType } from "../Res/PlayerRes";
 
 
@@ -15,3 +15,8 @@ export const PostPlayer = async <T>(dataPost: T) => {
   const res= await postData<T, PlayerResType>(url, dataPost);
   return res;
 };
+
+export const deletePlayer = async <T>(id: number) => {
+  const res = await deleteData<T>(`${url}/${id}`);
+  return res;
+}
