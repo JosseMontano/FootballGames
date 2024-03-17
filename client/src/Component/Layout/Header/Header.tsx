@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../Shared/Components/logo";
+import { useAuth } from "../../../Global/Context/UseAuth";
 
 const products = [
   {
@@ -60,20 +61,17 @@ function classNames(...classes: any) {
 }
 
 const SIDEBAR_TABS = [
+  { name: "Inicio", path: "/Welcome" },
   { name: "Equipo", path: "/team" },
   { name: "Jugador", path: "/player" },
-/*   { name: "Titular", path: "/titular" },
-  { name: "Instagram", path: "/instagram" },
-
-  { name: "Book my show", path: "/bookmyshow" },
-  { name: "Whatsapp", path: "/whatsapp" },
-  { name: "Netflix", path: "/netflix" }, */
 ];
 
 const Header = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {logout} = useAuth()
   const handleLogOut = () => {
+    logout();
     navigate("/login");
     localStorage.clear();
   };
@@ -106,7 +104,7 @@ const Header = () => {
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-            <Popover.Group className="hidden lg:flex lg:gap-x-12">
+    {/*         <Popover.Group className="hidden lg:flex lg:gap-x-12">
               <Popover className="relative">
                 <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
                   Product
@@ -190,7 +188,7 @@ const Header = () => {
               >
                 Company
               </a>
-            </Popover.Group>
+            </Popover.Group> */}
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a
                 className="cursor-pointer text-sm font-semibold leading-6 text-gray-900"

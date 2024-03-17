@@ -23,6 +23,8 @@ import { loginService } from "./Services/login";
 import { UseRouter } from "../Global/hooks/useRouter";
 import { Toaster, toast } from "react-hot-toast";
 import Logo from "../Shared/Components/logo";
+import { useAuth } from "../Global/Context/UseAuth";
+import { UserAuth } from "../Interfaces/UserAuth";
 
 function Login() {
   const {
@@ -53,25 +55,22 @@ function Login() {
   let msgBtnForm = "Iniciar sesion";
 
   const { redirect } = UseRouter();
+  const { login } = useAuth();
 
   const handleLogin = async (data: LoginDTO) => {
     setLoader(true);
     const res = await loginService(data);
     const thereIsToken = res.data.token;
     if (thereIsToken) {
-      redirect("/dashboard");
+      localStorage.setItem("token", thereIsToken);
+      const user: UserAuth = {
+        admin: true,
+        gmail: data.gmail,
+      };
+      login(user);
+      redirect("/Welcome");
     } else toast.error(res.message, { duration: 3000 });
     setLoader(false);
-
-    /*    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
-      navigate("/dashboard");
-      setLoader(false);
-    } catch (err: any) {
-      console.log(error);
-    } */
   };
 
   const handleGoogleLogin = async () => {
@@ -79,10 +78,18 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
       const token = await result.user.getIdToken();
       localStorage.setItem("token", token);
-      navigate("/dashboard");
+
+      if (result.user.email) {
+        const user: UserAuth = {
+          admin: false,
+          gmail: result.user.email,
+        };
+        login(user);
+        navigate("/Welcome");
+      }
+
       setLoader(false);
     } catch (error: any) {
       console.log(error);

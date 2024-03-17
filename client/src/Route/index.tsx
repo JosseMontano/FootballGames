@@ -44,7 +44,7 @@ const routes = createBrowserRouter([
     element: <DefaultLayout />,
     children: [
       {
-        path: "dashboard",
+        path: "Welcome",
         element: <Dashboard />,
       },
       {

@@ -20,7 +20,8 @@
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/babel__generator": "^7.6.4",
