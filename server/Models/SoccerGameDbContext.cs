@@ -44,14 +44,11 @@ public partial class SoccerGameDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
-            entity.Property(e => e.Playerid).HasColumnName("playerid");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .HasColumnName("type");
 
-            entity.HasOne(d => d.Player).WithMany(p => p.Champeonships)
-                .HasForeignKey(d => d.Playerid)
-                .HasConstraintName("champeonships_playerid_fkey");
+
         });
 
         modelBuilder.Entity<Game>(entity =>

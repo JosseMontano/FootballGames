@@ -31,7 +31,6 @@ namespace server.Controllers
         {
             Champeonship championship = new()
             {
-                Playerid = body.Playerid,
                 Name = body.Name,
                 Amountteams = body.AmountTeams,
                 Type = body.Type,
@@ -49,7 +48,6 @@ namespace server.Controllers
         {
             var championship = db.Champeonships.Find(id);
             if (championship == null) return res.NotFoundResponse(Messages.Championship.NOTFOUND);
-            championship.Playerid = body.Playerid;
             championship.Name = body.Name;
             championship.Amountteams = body.AmountTeams;
             championship.Type = body.Type;

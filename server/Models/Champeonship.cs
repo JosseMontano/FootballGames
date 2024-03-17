@@ -7,7 +7,6 @@ public partial class Champeonship
 {
     public int Id { get; set; }
 
-    public int? Playerid { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -21,5 +20,4 @@ public partial class Champeonship
 
     public virtual ICollection<Game> Games { get; set; } = new List<Game>();
 
-    public virtual Player? Player { get; set; }
 }
