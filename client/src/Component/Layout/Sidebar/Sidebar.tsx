@@ -7,8 +7,10 @@ const Sidebar = () => {
 
   const SIDEBAR_TABS = [
     { name: "Inicio", path: "/Welcome" },
-    { name: "Equipo", path: "/team" },
-    { name: "Jugador", path: "/player" },
+    { name: "Equipos", path: "/team" },
+    { name: "Jugadores", path: "/player" },
+    { name: "Campeonatos", path: "/champeonship" },
+    { name: "Partidos", path: "/game" },
   ];
 
   const handleTabClick = (path: string) => {

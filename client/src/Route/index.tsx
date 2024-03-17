@@ -9,9 +9,9 @@ import Dashboard from "../Component/Pages/Dashboard/Dashboard";
 import NotFound from "../Component/Pages/NotFound/NotFound";
 import Player from "../Component/Pages/Player/Player";
 import Team from "../Component/Pages/Team/Team";
-import BookMyShow from "../Component/Pages/BookMyShow/BookMyShow";
-import Whatsapp from "../Component/Pages/Whatsapp/Whatsapp";
 import Person from "../Component/Pages/Person/Person";
+import Champeonship from "../Component/Pages/Champeonship";
+import Game from "../Component/Pages/Game";
 
 const routes = createBrowserRouter([
   {
@@ -55,7 +55,14 @@ const routes = createBrowserRouter([
         path: "team",
         element: <Team />,
       },
-/*       {
+      {
+        path: "champeonship",
+        element: <Champeonship />,
+      },     {
+        path: "game",
+        element: <Game />,
+      },
+      /*       {
         path: "bookmyshow",
         element: <BookMyShow />,
       },

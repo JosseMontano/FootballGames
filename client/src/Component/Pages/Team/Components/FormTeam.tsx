@@ -47,8 +47,6 @@ const FormTeam = ({ handleCloseModal, team, getDataTeams }: Props) => {
     setLoader(false);
   };
 
-  const { data } = useFetch<TeamResType>({ services: getTeams });
-
   const msgBtn = team.id ? "Editar Equipo" : "Crear Equipo";
 
   return (
