@@ -1,7 +1,7 @@
 import { TeamResType } from "../../../../Shared/Interfaces/Team"
-import { PlayerFormDTO } from "../Dtos/PlayerForm"
+import {  PlayerType } from "../Dtos/PlayerForm"
 
-export interface PlayerResType extends PlayerFormDTO{
+export interface PlayerResType extends PlayerType{
     id: number
     champeonships: any[]
     team: TeamResType

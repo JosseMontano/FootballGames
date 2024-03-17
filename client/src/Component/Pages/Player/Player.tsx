@@ -52,6 +52,7 @@ const Player = () => {
   //edit
   const [player, setPlayer] = useState({} as PlayerResType);
   const handleEdit = (player: PlayerResType) => {
+    console.log(player);
     setPlayer(player);
     handleOpenModal();
   };

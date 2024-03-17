@@ -13,10 +13,6 @@ export const PlayerFormSchema = z.object({
     .string()
     .min(8, "El teléfono móvil debe tener al menos 8 dígitos"),
   /*   photo: z.string().url("La foto debe ser una URL válida"), */
-  age: z
-    .string()
-    .transform((val) => parseFloat(val))
-    .refine((val) => val >= 0, "La edad debe ser un número positivo"),
-  teamId: z.string().transform((val) => parseFloat(val))
+  teamid: z.string().transform((val) => parseFloat(val))
   .refine((val) => val >= 0, "Seleccione una opcion"),
 });

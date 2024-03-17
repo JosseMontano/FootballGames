@@ -8,6 +8,7 @@ interface Props {
 }
 
 const SelectComp = ({ error, label, register, showJSX }: Props) => {
+
   return (
     <div>
       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

@@ -93,7 +93,7 @@ function Login() {
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <Logo size="60px"/>
+          <Logo size="60px" />
           <a className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
             React Mania
           </a>
@@ -166,13 +166,10 @@ function Login() {
                     fill="#EB4335"
                   />
                 </svg>
-                {userEmail ? (
-                  <p className="text-primary-500 ml-4">{userEmail}</p>
-                ) : (
-                  <p className="text-base font-medium ml-4 text-gray-700">
-                    Continue with Google
-                  </p>
-                )}
+
+                <p className="text-base font-medium ml-4 text-gray-700">
+                  Continue with Google
+                </p>
               </button>
             </FormComponent>
           </div>

@@ -9,8 +9,6 @@ public class PlayerDto
     public required string Cellphone { get; set; }
     public required string Photo { get; set; }
 
-    public required int Age { get; set; }
-
-    public required int TeamId { get; set; }
+    public required int Teamid { get; set; }
 
 }

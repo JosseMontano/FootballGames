@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PlayerFormSchema } from "../Validations/FormPlayer";
 import FormComponent from "../../../../Global/components/Form";
 import { useState } from "react";
-import { PostPlayer } from "../Services/player";
+import { PostPlayer, PutPlayer } from "../Services/player";
 import toast from "react-hot-toast";
 import SelectComp from "../../../../Global/components/Select";
 import useFetch from "../../../../Global/hooks/UseFetch";
@@ -18,11 +18,9 @@ import { PlayerResType } from "../Res/PlayerRes";
 interface Props {
   handleCloseModal: () => void;
   player: PlayerResType;
-  getDataPlayers: () => Promise<void>
+  getDataPlayers: () => Promise<void>;
 }
 const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
-
-
   const {
     register,
     handleSubmit,
@@ -32,15 +30,26 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
     defaultValues: player,
   });
 
+    //vars form
+    const isEdit = Object.keys(player).length > 0;
+    const title = isEdit ? "Editar jugador" : "Crear jugador";
+    const btn = isEdit ? "Editar Jugador" : "Crear Jugador";
+
   const [loader, setLoader] = useState(false);
 
   const handleForm = async (data: PlayerFormDTO) => {
     setLoader(true);
     data.photo = "jugador";
-    const res = await PostPlayer(data);
-    console.log(res);
+
+    let res;
+    if (isEdit) {
+      res = await PutPlayer(data, player.id);
+    } else {
+      res = await PostPlayer(data);
+    }
+    
     if (res.status == 200) {
-      await getDataPlayers()
+      await getDataPlayers();
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();
     } else toast.error(res.message, { duration: 3000 });
@@ -50,14 +59,21 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
   const { data } = useFetch<TeamResType>({ services: getTeams });
 
   const showTeamsJSX = () => {
-    return data.map((team) => <option value={team.id}>{team.name}</option>);
+    return data.map((team) => (
+      <option value={team.id} selected={team.id == player.teamid}>
+        {team.name}
+      </option>
+    ));
   };
 
+
+
+  console.log(errors);
   return (
     <FormComponent
       handleForm={handleForm}
       handleSubmit={handleSubmit}
-      title="Crear jugador"
+      title={title}
     >
       <div className="flex flex-row gap-3">
         <div>
@@ -103,17 +119,9 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
             type="text"
           />
 
-          <Input
-            error={errors.age}
-            label="Edad"
-            placeholder="32"
-            register={register("age")}
-            type="number"
-          />
-
           <SelectComp
-            register={register("teamId")}
-            error={errors.teamId}
+            register={register("teamid")}
+            error={errors.teamid}
             label="Equipo"
             showJSX={() => showTeamsJSX()}
           />
