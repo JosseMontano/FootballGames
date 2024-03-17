@@ -9,11 +9,11 @@ using server.Models;
 
 #nullable disable
 
-namespace server.Migrations.SoccerGameDb
+namespace server.Migrations
 {
     [DbContext(typeof(SoccerGameDbContext))]
-    [Migration("20240304213950_TableUser")]
-    partial class TableUser
+    [Migration("20240317230316_DeletePlayerIdOfChampeonship")]
+    partial class DeletePlayerIdOfChampeonship
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,9 +52,8 @@ namespace server.Migrations.SoccerGameDb
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<int?>("Playerid")
-                        .HasColumnType("integer")
-                        .HasColumnName("playerid");
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -65,7 +64,7 @@ namespace server.Migrations.SoccerGameDb
                     b.HasKey("Id")
                         .HasName("champeonships_pkey");
 
-                    b.HasIndex("Playerid");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("champeonships", (string)null);
                 });
@@ -207,12 +206,9 @@ namespace server.Migrations.SoccerGameDb
 
             modelBuilder.Entity("server.Models.Champeonship", b =>
                 {
-                    b.HasOne("server.Models.Player", "Player")
+                    b.HasOne("server.Models.Player", null)
                         .WithMany("Champeonships")
-                        .HasForeignKey("Playerid")
-                        .HasConstraintName("champeonships_playerid_fkey");
-
-                    b.Navigation("Player");
+                        .HasForeignKey("PlayerId");
                 });
 
             modelBuilder.Entity("server.Models.Game", b =>

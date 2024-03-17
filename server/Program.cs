@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using server.Data;
 using server.Models;
 
 var builder = WebApplication.CreateBuilder(args);

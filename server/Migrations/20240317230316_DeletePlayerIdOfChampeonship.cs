@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace server.Migrations.SoccerGameDb
+namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class DeletePlayerIdOfChampeonship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,12 +32,7 @@ namespace server.Migrations.SoccerGameDb
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Gmail = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    Estado = table.Column<string>(type: "text", nullable: false),
-                    IdUsrCreacion = table.Column<int>(type: "integer", nullable: true),
-                    IdUsrModificacion = table.Column<int>(type: "integer", nullable: true),
-                    FechaModificacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,19 +70,19 @@ namespace server.Migrations.SoccerGameDb
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    playerid = table.Column<int>(type: "integer", nullable: true),
                     name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     amountteams = table.Column<int>(type: "integer", nullable: false),
                     type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     datestart = table.Column<DateOnly>(type: "date", nullable: false),
-                    dateend = table.Column<DateOnly>(type: "date", nullable: false)
+                    dateend = table.Column<DateOnly>(type: "date", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("champeonships_pkey", x => x.id);
                     table.ForeignKey(
-                        name: "champeonships_playerid_fkey",
-                        column: x => x.playerid,
+                        name: "FK_champeonships_players_PlayerId",
+                        column: x => x.PlayerId,
                         principalTable: "players",
                         principalColumn: "id");
                 });
@@ -124,9 +119,9 @@ namespace server.Migrations.SoccerGameDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_champeonships_playerid",
+                name: "IX_champeonships_PlayerId",
                 table: "champeonships",
-                column: "playerid");
+                column: "PlayerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_games_champeonshipid",

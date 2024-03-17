@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Constants;
-using server.Data;
 using server.Dtos;
 using server.Models;
 using server.Utils;
@@ -27,7 +26,7 @@ namespace server.Controllers
         [HttpGet]
         public IActionResult GetGames()
         {
-            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).ToList();
+            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).ToList();
             return res.SuccessResponse(Messages.Game.FOUND, games);
         }
 
@@ -35,7 +34,7 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public IActionResult GetGame(int id)
         {
-            var game = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).FirstOrDefault(v => v.Id == id);
+            var game = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).FirstOrDefault(v => v.Id == id);
             if (game == null) return res.NotFoundResponse(Messages.Game.NOTFOUND);
             return res.SuccessResponse(Messages.Player.FOUND, game);
         }
