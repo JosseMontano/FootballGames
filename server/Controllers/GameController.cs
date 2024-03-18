@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("game")]
     [ApiController]
     public class GameController : ControllerBase
     {

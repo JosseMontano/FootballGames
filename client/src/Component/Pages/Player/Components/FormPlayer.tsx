@@ -66,9 +66,6 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
     ));
   };
 
-
-
-  console.log(errors);
   return (
     <FormComponent
       handleForm={handleForm}
@@ -129,9 +126,9 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
       </div>
 
       {!loader ? (
-        <BtnForm msg={"Crear Jugador"} />
+        <BtnForm msg={btn} />
       ) : (
-        <BtnLoader txt={"Crear Jugador"} />
+        <BtnLoader txt={btn} />
       )}
     </FormComponent>
   );

@@ -22,13 +22,7 @@ import FormPlayer from "./Components/FormPlayer";
 const Player = () => {
   const { handleOpenModal, ShowModalJSX, handleCloseModal } = UseModal();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PlayerFormDTO>({
-    resolver: zodResolver(PlayerFormSchema),
-  });
+
 
   //table
 
