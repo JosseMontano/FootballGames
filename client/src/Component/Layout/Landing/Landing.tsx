@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import MexicoImg from "../../../assets/Landing/mexico.png";
 import BoliviaImg from "../../../assets/Landing/bolivia.png";
-import ArgentinaImg from "../../../assets/Landing/argentina.png";
-import ItaliaImg from "../../../assets/Landing/italia.png";
 import PortadaImg from "../../../assets/Landing/portada.png";
 import PlayerImg from "../../../assets/Landing/lampe.jpg";
 import { UseRouter } from "../../../Global/hooks/useRouter";
@@ -17,6 +15,10 @@ import TableComponent from "../../../Global/components/Table";
 import { getPlayerToTeam } from "../../../Shared/Services/Player";
 import { PlayerResType } from "../../Pages/Player/Res/PlayerRes";
 import Logo from "../../../Shared/Components/logo";
+import { dataGamesType, filterGamesType } from "./Types/filterGames";
+import { getFutureGames, getPastGames } from "./Services/game";
+import { GameRes } from "../../Pages/Game/Res/GameRes";
+import TableGame from "./Components/tableGames";
 
 const navigation = [
   { name: "Example1", href: "#" },
@@ -91,6 +93,27 @@ export default function Landing() {
     };
   }, []);
 
+  // Filter of the games
+  const [filterGames, setFilterGames] = useState<filterGamesType>("lastGames");
+
+  const dataGames: dataGamesType[] = [
+    {
+      name: "Ulitmos partidos",
+      val: "lastGames",
+    },
+    {
+      name: "Proximos partidos",
+      val: "futureGames",
+    },
+  ];
+
+  const handleChangeFilterGames = (filter: filterGamesType) => {
+    setFilterGames(filter);
+  };
+
+  const { data: pastGames } = useFetch<GameRes>({ services: getPastGames }); //get past dates
+  const { data: futureGames } = useFetch<GameRes>({ services: getFutureGames }); //get future dates
+
   return (
     <div className="bg-white">
       <header
@@ -105,7 +128,7 @@ export default function Landing() {
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Logo size="25px"/>
+              <Logo size="25px" />
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -339,48 +362,42 @@ export default function Landing() {
             </div>
 
             <div className="flex space-x-2">
-              <p className="text-lg cursor-pointer border-b-2 border-purple-700">
-                Ultimos partidos
-              </p>
-              <p className="text-lg cursor-pointer">Futuros partidos</p>
+              {dataGames.map((v) => (
+                <p
+                  onClick={() => handleChangeFilterGames(v.val)}
+                  className={`text-lg cursor-pointer border-b-2 ${
+                    filterGames == v.val ? "border-purple-700" : ""
+                  }`}
+                >
+                  {v.name}
+                </p>
+              ))}
             </div>
 
             <table className="w-full">
               <tbody>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-                  <tr>
-                    <td className="align-top">
-                      <div className="flex items-center space-x-2">
-                        <img
-                          className="w-6 h-6 rounded-full"
-                          src={ArgentinaImg}
-                          alt=""
-                        />
-                        <p>Argentina</p>
-                      </div>
-                    </td>
-                    <td className="align-top">
-                      <p className="bg-purple-300 p-2 rounded-lg text-purple-700 w-12 text-center font-bold">
-                        1-2
-                      </p>
-                    </td>
-                    <td className="align-top">
-                      <div className="flex items-center space-x-2">
-                        <img
-                          className="w-6 h-6 rounded-full"
-                          src={ItaliaImg}
-                          alt=""
-                        />
-                        <p>Italia</p>
-                      </div>
-                    </td>
-                    <td className="align-top">
-                      <p className="bg-red-800 p-1 rounded text-red-500  text-center font-bold">
-                        10 diciembre 2022
-                      </p>
-                    </td>
-                  </tr>
-                ))}
+                {filterGames == "lastGames" &&
+                  pastGames.length > 0 &&
+                  pastGames.map((v) => (
+                    <TableGame
+                      BoliviaImg={BoliviaImg}
+                      champeonship={v.champeonship}
+                      localteam={v.localteam}
+                      visitorteam={v.visitorteam}
+                      filterGames={filterGames}
+                    />
+                  ))}
+                {filterGames == "futureGames" &&
+                  futureGames.length > 0 &&
+                  futureGames.map((v) => (
+                    <TableGame
+                      BoliviaImg={BoliviaImg}
+                      champeonship={v.champeonship}
+                      localteam={v.localteam}
+                      visitorteam={v.visitorteam}
+                      filterGames={filterGames}
+                    />
+                  ))}
               </tbody>
             </table>
           </div>

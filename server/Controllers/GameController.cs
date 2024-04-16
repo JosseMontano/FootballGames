@@ -39,6 +39,35 @@ namespace server.Controllers
             return res.SuccessResponse(Messages.Player.FOUND, game);
         }
 
+        // Get by past date
+        [HttpGet("past-date")]
+        public IActionResult GetPastGames()
+        {
+            var games = db.Games
+                .Include(v => v.Localteam)
+                .Include(v => v.Visitorteam)
+                .Include(v => v.Champeonship)
+                .Where(v => v.Champeonship!.Dateend < DateOnly.FromDateTime(DateTime.Now))
+                .ToList();
+
+            return res.SuccessResponse(Messages.Game.FOUND, games);
+        }
+
+        
+        // Get by future date
+        [HttpGet("future-date")]
+        public IActionResult GetFutureGames()
+        {
+            var games = db.Games
+                .Include(v => v.Localteam)
+                .Include(v => v.Visitorteam)
+                .Include(v => v.Champeonship)
+                .Where(v => v.Champeonship!.Dateend > DateOnly.FromDateTime(DateTime.Now))
+                .ToList();
+
+            return res.SuccessResponse(Messages.Game.FOUND, games);
+        }
+
         // POST: api/Game
         [HttpPost]
         public IActionResult PostGame(GameDto body)
