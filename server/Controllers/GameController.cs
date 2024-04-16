@@ -53,7 +53,7 @@ namespace server.Controllers
             return res.SuccessResponse(Messages.Game.FOUND, games);
         }
 
-        
+
         // Get by future date
         [HttpGet("future-date")]
         public IActionResult GetFutureGames()
@@ -97,6 +97,8 @@ namespace server.Controllers
             game.Date = body.Date;
             game.Localteamid = body.Localteamid;
             game.Visitorteamid = body.Visitorteamid;
+            game.AmountGoalsVisitor = body.AmountGoalsVisitor;
+            game.AmountGoalsLocal = body.AmountGoalsLocal;
 
             db.SaveChanges();
             return res.SuccessResponse(Messages.Game.UPDATED, game);

@@ -381,10 +381,8 @@ export default function Landing() {
                   pastGames.map((v) => (
                     <TableGame
                       BoliviaImg={BoliviaImg}
-                      champeonship={v.champeonship}
-                      localteam={v.localteam}
-                      visitorteam={v.visitorteam}
                       filterGames={filterGames}
+                      game={v}
                     />
                   ))}
                 {filterGames == "futureGames" &&
@@ -392,10 +390,8 @@ export default function Landing() {
                   futureGames.map((v) => (
                     <TableGame
                       BoliviaImg={BoliviaImg}
-                      champeonship={v.champeonship}
-                      localteam={v.localteam}
-                      visitorteam={v.visitorteam}
                       filterGames={filterGames}
+                      game={v}
                     />
                   ))}
               </tbody>

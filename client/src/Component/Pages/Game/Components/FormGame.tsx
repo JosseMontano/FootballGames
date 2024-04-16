@@ -42,6 +42,7 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
 
   const handleForm = async (data: GameFormDto) => {
     setLoader(true);
+    console.log(data);
     let res;
     if (isEdit) {
       res = await PutGame(data, game.id);
@@ -129,6 +130,25 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
             register={register("date")}
             type="text"
           />
+
+          {isEdit && (
+            <>
+              <Input
+                error={errors.amountGoalsLocal}
+                label="Goles del local"
+                placeholder="1"
+                register={register("amountGoalsLocal")}
+                type="text"
+              />
+              <Input
+                error={errors.amountGoalsVisitor}
+                label="Goles del visitor"
+                placeholder="2"
+                register={register("amountGoalsVisitor")}
+                type="text"
+              />
+            </>
+          )}
         </div>
       </div>
 

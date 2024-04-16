@@ -20,7 +20,6 @@ const Game = () => {
 
   //delete
   const handleDelete = async (id: number) => {
-    console.log(id);
     const res = await deleteGame(id);
     if (res.status == 200) {
       toast.success(res.message, { duration: 3000 });
@@ -45,6 +44,8 @@ const Game = () => {
     "Fecha de fin",
     "Equipo local",
     "Equipo visitante",
+    "Goles equipo local",
+    "Goles equipo visitante",
   ];
 
   const bodyTableJSX = () => {
@@ -59,6 +60,8 @@ const Game = () => {
           <td>{v.champeonship.dateend}</td>
           <td>{v.localteam.name}</td>
           <td>{v.visitorteam.name}</td>
+          <td>{v.amountGoalsLocal ? v.amountGoalsLocal : "No aplica"}</td>
+          <td>{v.amountGoalsVisitor ? v.amountGoalsVisitor : "No aplica"}</td>
           <td className="px-6 py-4 whitespace-nowrap">
             <button
               className="text-blue-500 hover:text-blue-700"
