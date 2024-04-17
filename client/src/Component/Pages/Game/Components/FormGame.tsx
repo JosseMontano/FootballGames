@@ -42,7 +42,6 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
 
   const handleForm = async (data: GameFormDto) => {
     setLoader(true);
-    console.log(data);
     let res;
     if (isEdit) {
       res = await PutGame(data, game.id);
