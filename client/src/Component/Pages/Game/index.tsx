@@ -9,9 +9,15 @@ import { useState } from "react";
 import BtnBasic from "../../../Global/components/BtnBasic";
 import FormGame from "./Components/FormGame";
 import TableComponent from "../../../Global/components/Table";
+import FormGameRandom from "./Components/FormGameRandom";
 
 const Game = () => {
   const { handleOpenModal, ShowModalJSX, handleCloseModal } = UseModal();
+  const {
+    handleOpenModal: openModalRand,
+    ShowModalJSX: showModalRand,
+    handleCloseModal: closeModalRand,
+  } = UseModal();
 
   //body table
   const { data: games, fetchData: getDataGames } = useFetch<GameRes>({
@@ -33,15 +39,14 @@ const Game = () => {
   const [game, setGame] = useState({} as GameRes);
   const handleEdit = (v: GameRes) => {
     setGame(v);
-    handleOpenModal();
+    openModalRand();
   };
 
   const columnsTable = [
     "Nombre del campeonato",
     "Cantidad de equipos",
     "Tipo del campeonato",
-    "Fecha de inicio",
-    "Fecha de fin",
+    "Fecha",
     "Equipo local",
     "Equipo visitante",
     "Goles equipo local",
@@ -56,8 +61,7 @@ const Game = () => {
           <td>{v.champeonship.name}</td>
           <td>{v.champeonship.amountteams}</td>
           <td>{v.champeonship.type}</td>
-          <td>{v.champeonship.datestart}</td>
-          <td>{v.champeonship.dateend}</td>
+          <td>{v.date}</td>
           <td>{v.localteam.name}</td>
           <td>{v.visitorteam.name}</td>
           <td>{v.amountGoalsLocal ? v.amountGoalsLocal : "No aplica"}</td>
@@ -86,9 +90,20 @@ const Game = () => {
     handleOpenModal();
   };
 
+  const handleCreateGameRandomic = () => {
+    setGame({} as GameRes);
+    openModalRand();
+  };
+
   return (
-    <>
-      <BtnBasic onClick={handleCreateGame} txt="Crear datos" />
+    <div className="flex flex-col gap-3">
+      <div className="flex gap-3">
+        <BtnBasic onClick={handleCreateGame} txt="Crear datos" />
+        <BtnBasic
+          onClick={handleCreateGameRandomic}
+          txt="Generar aleatoriamente"
+        />
+      </div>
 
       {ShowModalJSX(
         <>
@@ -100,10 +115,16 @@ const Game = () => {
         </>
       )}
 
+      {showModalRand(
+     
+          <FormGameRandom game={game} getDataGames={getDataGames} handleCloseModal={handleCloseModal}>
+        </FormGameRandom>
+      )}
+
       <TableComponent columnsTable={columnsTable} bodyTableJSX={bodyTableJSX} />
 
       <Toaster position="top-right" reverseOrder={false} />
-    </>
+    </div>
   );
 };
 

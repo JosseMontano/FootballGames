@@ -12,6 +12,9 @@ import { getTeams } from "../../../../Shared/Services/Team";
 import BtnForm from "../../../../Global/components/BtnForm";
 import BtnLoader from "../../../../Global/components/BtnLoader";
 import { TeamResType } from "../Res/TeamRes";
+import SelectComp from "../../../../Global/components/Select";
+import { DivisionResType } from "../../Divisions/Types/DivisionsRes";
+import { getDivisions } from "../../Divisions/Services/Divisions";
 
 interface Props {
   handleCloseModal: () => void;
@@ -47,22 +50,42 @@ const FormTeam = ({ handleCloseModal, team, getDataTeams }: Props) => {
     setLoader(false);
   };
 
-  const msgBtn = team.id ? "Editar Equipo" : "Crear Equipo";
+  const msgBtn = team.id ? "Editar" : "Crear";
+
+  const { data: divisionData } = useFetch<DivisionResType>({
+    services: getDivisions,
+  });
+
+  const showDivisionJSX = () => {
+    return divisionData.map((v) => (
+      <option value={v.id} selected={v.id == team.divisionId}>
+        {v.name}
+      </option>
+    ));
+  };
 
   return (
     <FormComponent
       handleForm={handleForm}
       handleSubmit={handleSubmit}
-      title="Crear jugador"
+      title="Formulario de Equipo"
     >
       <div className="flex flex-row gap-3">
-        <Input
-          error={errors.name}
-          label="Nombre del equipo"
-          placeholder="Bolivar"
-          register={register("name")}
-          type="text"
-        />
+        <div>
+          <Input
+            error={errors.name}
+            label="Nombre del equipo"
+            placeholder="Bolivar"
+            register={register("name")}
+            type="text"
+          />
+          <SelectComp
+            register={register("divisionId")}
+            error={errors.divisionId}
+            label="Division"
+            showJSX={() => showDivisionJSX()}
+          />
+        </div>
       </div>
 
       {!loader ? <BtnForm msg={msgBtn} /> : <BtnLoader txt={msgBtn} />}

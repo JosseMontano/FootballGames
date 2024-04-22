@@ -16,6 +16,12 @@ export const PostGame = async <T>(dataPost: T) => {
   return res;
 };
 
+export const PostGameRandom = async <T>(dataPost: T) => {
+  const res= await postData<T, GameRes>(url+'/Register-random-game', dataPost);
+  return res;
+};
+
+
 export const PutGame = async <T>(dataPost: T, id:number) => {
   const res= await putData<T, GameRes>(url+`/${id}`, dataPost);
   return res;

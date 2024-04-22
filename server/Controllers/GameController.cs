@@ -26,7 +26,7 @@ namespace server.Controllers
         [HttpGet]
         public IActionResult GetGames()
         {
-            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).ToList();
+            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).OrderBy(v=>v.Id).ToList();
             return res.SuccessResponse(Messages.Game.FOUND, games);
         }
 
@@ -78,13 +78,88 @@ namespace server.Controllers
                 Date = body.Date,
                 Localteamid = body.Localteamid,
                 Visitorteamid = body.Visitorteamid
-
             };
 
             db.Games.Add(game);
             db.SaveChanges();
             return res.SuccessResponse(Messages.Game.CREATED, game);
         }
+
+        // POST: api/Game
+        [HttpPost("Register-random-game")]
+        public IActionResult RegisterRandomGame(GamesRandomsDto body)
+        {
+            var teams = db.Teams.Include(v => v.Division).ToList();
+
+            // Shuffle teams
+            Random rng = new Random();
+            int n = teams.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                var value = teams[k];
+                teams[k] = teams[n];
+                teams[n] = value;
+            }
+
+            var champeonShip = db.Champeonships.Find(body.Champeonshipid);
+
+            if (champeonShip == null) return res.NotFoundResponse(Messages.Championship.NOTFOUND);
+
+            var excludeTeamsId = new List<int>();
+
+            var dateEachGame = champeonShip.Datestart;
+
+            List<Game> games = new();
+
+            for (int i = 0; i < teams.Count(); i++)
+            {
+                var localTeam = teams[i];
+
+                int numerTeamsToDivision = teams.Count(v => v.Division.Name == localTeam.Division.Name);
+
+                bool isEven = numerTeamsToDivision % 2 == 0;
+
+                if (!isEven) continue;
+
+                if (excludeTeamsId.Contains(localTeam.Id)) continue;
+
+                for (int j = 0; j < teams.Count(); j++)
+                {
+                    var visitorTeam = teams[j];
+                    if (localTeam.Id == visitorTeam.Id) continue;
+                    if (excludeTeamsId.Contains(visitorTeam.Id)) continue;
+                    if (localTeam.Division.Name != visitorTeam.Division.Name) continue;
+
+
+                    excludeTeamsId.Add(localTeam.Id);
+                    excludeTeamsId.Add(visitorTeam.Id);
+
+                    Game game = new()
+                    {
+                        Champeonshipid = body.Champeonshipid,
+                        Date = dateEachGame,
+                        Localteamid = localTeam.Id,
+                        Visitorteamid = visitorTeam.Id
+                    };
+
+                    dateEachGame = dateEachGame.AddDays(1);
+
+                    db.Games.Add(game);
+
+                    games.Add(game);
+
+                    break;
+
+                }
+                db.SaveChanges();
+
+            }
+
+            return res.SuccessResponse(Messages.Game.CREATED, games);
+        }
+
 
         // PUT: api/Game/5
         [HttpPut("{id}")]

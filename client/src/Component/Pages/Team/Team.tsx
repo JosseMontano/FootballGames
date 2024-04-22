@@ -42,12 +42,13 @@ const Amazon = () => {
     }
   };
 
-  const columnsTable = ["Nombre"];
+  const columnsTable = ["Nombre", "Division"];
 
   const bodyTableJSX = () => {
     return teams.map((v) => (
       <tr>
         <td>{v.name}</td>
+        <td>{v.division.name}</td>
 
         <td className="px-6 py-4 whitespace-nowrap">
           <button

@@ -16,3 +16,12 @@ public partial class GameDto
     public DateOnly Date { get; set; }
 
 }
+
+
+public partial class GamesRandomsDto
+{
+    public int? Champeonshipid { get; set; }
+
+
+}
+
