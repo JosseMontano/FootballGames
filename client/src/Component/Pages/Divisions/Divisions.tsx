@@ -1,39 +1,36 @@
-import React, { useState } from "react";
-import BtnBasic from "../../../Global/components/BtnBasic";
+import { useState } from "react";
 import UseModal from "../../../Global/hooks/useModal";
-
-import FormTeam from "./Components/FormTeam";
-import { TeamResType } from "./Res/TeamRes";
-import { getTeams } from "../../../Shared/Services/Team";
+import { DivisionResType } from "./Types/DivisionsRes";
 import useFetch from "../../../Global/hooks/UseFetch";
+import { deleteDivision, getDivisions } from "./Services/Divisions";
 import toast, { Toaster } from "react-hot-toast";
-import { deleteTeam } from "./Services/team";
+import BtnBasic from "../../../Global/components/BtnBasic";
 import TableComponent from "../../../Global/components/Table";
+import FormDivision from "./Components/FormDivision";
 
-const Amazon = () => {
+interface Props {}
+const Divisions = ({}: Props) => {
   const { handleOpenModal, ShowModalJSX, handleCloseModal } = UseModal();
-  const [team, setTeam] = useState({} as TeamResType);
+  const [division, setDivision] = useState({} as DivisionResType);
 
-  const handleCreateTeam = () => {
-    setTeam({} as TeamResType);
+  const handleCreateDivision = () => {
+    setDivision({} as DivisionResType);
     handleOpenModal();
   };
 
-  //fetch
-
-  const handleEdit = (team: TeamResType) => {
-    setTeam(team);
+  const handleEdit = (division: DivisionResType) => {
+    setDivision(division);
     handleOpenModal();
   };
 
-  const { data: teams, fetchData: getDataTeams } = useFetch<TeamResType>({
-    services: getTeams,
+  const { data: teams, fetchData: getDataTeams } = useFetch<DivisionResType>({
+    services: getDivisions,
   });
 
   //delete
   const handleDelete = async (id: number) => {
     console.log(id);
-    const res = await deleteTeam(id);
+    const res = await deleteDivision(id);
     if (res.status == 200) {
       toast.success(res.message, { duration: 3000 });
       await getDataTeams();
@@ -60,7 +57,7 @@ const Amazon = () => {
             className="ml-4 text-red-500 hover:text-red-700"
             onClick={() => handleDelete(v.id)}
           >
-            Eliminar
+            eliminar
           </button>
         </td>
       </tr>
@@ -69,13 +66,13 @@ const Amazon = () => {
 
   return (
     <>
-      <BtnBasic onClick={handleCreateTeam} txt="Crear datos" />
+      <BtnBasic onClick={handleCreateDivision} txt="Crear datos" />
 
       {ShowModalJSX(
         <>
-          <FormTeam
+          <FormDivision
             handleCloseModal={handleCloseModal}
-            team={team}
+            division={division}
             getDataTeams={getDataTeams}
           />
         </>
@@ -88,4 +85,4 @@ const Amazon = () => {
   );
 };
 
-export default Amazon;
+export default Divisions;

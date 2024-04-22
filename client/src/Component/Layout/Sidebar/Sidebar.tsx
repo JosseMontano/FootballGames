@@ -7,6 +7,7 @@ const Sidebar = () => {
 
   const SIDEBAR_TABS = [
     { name: "Inicio", path: "/Welcome" },
+    { name: "Divisiones", path: "/Divisions" },
     { name: "Equipos", path: "/team" },
     { name: "Jugadores", path: "/player" },
     { name: "Campeonatos", path: "/champeonship" },

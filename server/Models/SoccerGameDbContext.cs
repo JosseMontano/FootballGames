@@ -20,6 +20,7 @@ public partial class SoccerGameDbContext : DbContext
     public virtual DbSet<Game> Games { get; set; }
 
     public virtual DbSet<Player> Players { get; set; }
+    public virtual DbSet<TeamDivision> TeamDivisions { get; set; }
 
     public virtual DbSet<Team> Teams { get; set; }
 
@@ -115,6 +116,24 @@ public partial class SoccerGameDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+
+            entity.Property(e => e.DivisionId).HasColumnName("divisionid");
+        });
+
+        modelBuilder.Entity<TeamDivision>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("teamdivisions_pkey");
+
+            entity.ToTable("teamdivisions");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+
+            entity.HasMany(d => d.Teams).WithOne(p => p.Division)
+            .HasForeignKey(d => d.DivisionId)
+            .HasConstraintName("teams_divisionid_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

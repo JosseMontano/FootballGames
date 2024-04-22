@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server.Models;
@@ -11,9 +12,11 @@ using server.Models;
 namespace server.Migrations
 {
     [DbContext(typeof(SoccerGameDbContext))]
-    partial class SoccerGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421215647_Add divisions")]
+    partial class Adddivisions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,9 +177,8 @@ namespace server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DivisionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("divisionid");
+                    b.Property<int?>("DivisionID")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -187,7 +189,7 @@ namespace server.Migrations
                     b.HasKey("Id")
                         .HasName("teams_pkey");
 
-                    b.HasIndex("DivisionId");
+                    b.HasIndex("DivisionID");
 
                     b.ToTable("teams", (string)null);
                 });
@@ -279,7 +281,7 @@ namespace server.Migrations
                 {
                     b.HasOne("server.Models.TeamDivision", "Division")
                         .WithMany("Teams")
-                        .HasForeignKey("DivisionId")
+                        .HasForeignKey("DivisionID")
                         .HasConstraintName("teams_divisionid_fkey");
 
                     b.Navigation("Division");

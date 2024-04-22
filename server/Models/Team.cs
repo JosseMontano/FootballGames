@@ -8,6 +8,8 @@ public partial class Team
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;
+    public required int DivisionId { get; set; }
+    public virtual TeamDivision? Division { get; set; }
 
     public virtual ICollection<Game> GameLocalteams { get; set; } = new List<Game>();
 

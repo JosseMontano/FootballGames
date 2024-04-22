@@ -3,6 +3,7 @@ namespace server.Constants
     public static class Messages
     {
         public static class Auth
+        
         {
             public static string FOUND { get; } = "Usuario obtenido correctamente";
             public static string NOTFOUND { get; } = "No se encontró el usuario";
@@ -18,6 +19,16 @@ namespace server.Constants
             public static string LOGINSUCESS { get; } = "Sesión iniciada correctamente";
         }
         
+       
+        public static class Divisions
+        {
+            public static string FOUND { get; } = "Divisiones obtenidas correctamente";
+            public static string NOTFOUND { get; } = "No se encontró la division";
+            public static string CREATED { get; } = "Division registrada correctamente";
+            public static string UPDATED { get; } = "Division actualizada exitosamente";
+            public static string DELETED { get; } = "Division eliminado exitosamente";
+        }
+       
         public static class Team
         {
             public static string FOUND { get; } = "Equipo obtenido correctamente";

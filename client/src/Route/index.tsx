@@ -12,6 +12,7 @@ import Team from "../Component/Pages/Team/Team";
 import Person from "../Component/Pages/Person/Person";
 import Champeonship from "../Component/Pages/Champeonship";
 import Game from "../Component/Pages/Game";
+import Divisions from "../Component/Pages/Divisions/Divisions";
 
 const routes = createBrowserRouter([
   {
@@ -52,13 +53,18 @@ const routes = createBrowserRouter([
         element: <Player />,
       },
       {
+        path: "Divisions",
+        element: <Divisions />,
+      },
+      {
         path: "team",
         element: <Team />,
       },
       {
         path: "champeonship",
         element: <Champeonship />,
-      },     {
+      },
+      {
         path: "game",
         element: <Game />,
       },
