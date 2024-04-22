@@ -1,14 +1,46 @@
+
+
+using System.ComponentModel.DataAnnotations;
+
 namespace server.Dtos;
 
-public class PlayerDto
+public partial class GameDto
 {
-    public required string Ci { get; set; }
-    public required string Names { get; set; }
-    public required string Lastnames { get; set; }
-    public required DateOnly Date { get; set; }
-    public required string Cellphone { get; set; }
-    public required string Photo { get; set; }
+    [Required]
+    public int? Localteamid { get; set; }
+    [Required]
 
-    public required int Teamid { get; set; }
+    public int? Visitorteamid { get; set; }
+    [Required]
+
+    public int? Champeonshipid { get; set; }
+
+    public int? AmountGoalsLocal { get; set; } = null;
+    public int? AmountGoalsVisitor { get; set; } = null;
+    [Required]
+    public DateOnly Date { get; set; }
 
 }
+
+
+public partial class GamePutDto
+{
+    [Required]
+    public int? Champeonshipid { get; set; }
+
+  
+    public int? AmountGoalsLocal { get; set; } = null;
+    public int? AmountGoalsVisitor { get; set; } = null;
+    [Required]
+    public DateOnly Date { get; set; }
+
+}
+
+
+public partial class GamesRandomsDto
+{
+    public int? Champeonshipid { get; set; }
+
+
+}
+

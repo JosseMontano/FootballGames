@@ -39,7 +39,7 @@ const Game = () => {
   const [game, setGame] = useState({} as GameRes);
   const handleEdit = (v: GameRes) => {
     setGame(v);
-    openModalRand();
+    handleOpenModal();
   };
 
   const columnsTable = [
@@ -116,9 +116,11 @@ const Game = () => {
       )}
 
       {showModalRand(
-     
-          <FormGameRandom game={game} getDataGames={getDataGames} handleCloseModal={handleCloseModal}>
-        </FormGameRandom>
+        <FormGameRandom
+          game={game}
+          getDataGames={getDataGames}
+          handleCloseModal={handleCloseModal}
+        ></FormGameRandom>
       )}
 
       <TableComponent columnsTable={columnsTable} bodyTableJSX={bodyTableJSX} />

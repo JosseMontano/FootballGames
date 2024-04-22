@@ -52,6 +52,7 @@ namespace server.Constants
             public static string FOUND { get; } = "Partido obtenido correctamente";
             public static string NOTFOUND { get; } = "No se encontró el partido";
             public static string CREATED { get; } = "Partido registrado correctamente";
+            public static string LIMITTEAMS { get; } = "Ya paso el limite de equipos en el campeonato";
             public static string UPDATED { get; } = "Partido actualizado exitosamente";
             public static string DELETED { get; } = "Partido eliminado exitosamente";
         }

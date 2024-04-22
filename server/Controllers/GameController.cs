@@ -26,7 +26,7 @@ namespace server.Controllers
         [HttpGet]
         public IActionResult GetGames()
         {
-            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).OrderBy(v=>v.Id).ToList();
+            var games = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).OrderBy(v => v.Id).ToList();
             return res.SuccessResponse(Messages.Game.FOUND, games);
         }
 
@@ -37,6 +37,21 @@ namespace server.Controllers
             var game = db.Games.Include(v => v.Localteam).Include(v => v.Visitorteam).Include(v => v.Champeonship).FirstOrDefault(v => v.Id == id);
             if (game == null) return res.NotFoundResponse(Messages.Game.NOTFOUND);
             return res.SuccessResponse(Messages.Player.FOUND, game);
+        }
+
+        [HttpGet("GamesWithoutChampeonship/{champeonshipId}")]
+        public IActionResult GetGameByChampeon(int champeonshipId)
+        {
+            int id = champeonshipId;
+            var allgamesLocalTeamId = db.Games.Where(v => v.Champeonshipid == id).Select(v => v.Localteamid).ToList();
+            var allgamesVisitorTeamId = db.Games.Where(v => v.Champeonshipid == id).Select(v => v.Visitorteamid).ToList();
+            var allgamesId = allgamesLocalTeamId.Concat(allgamesVisitorTeamId).ToList();
+
+            //teams don't have a champeonship
+            var teams = db.Teams.Where(t => !allgamesId.Contains(t.Id)).ToList();
+
+            if (teams == null) return res.NotFoundResponse(Messages.Game.NOTFOUND);
+            return res.SuccessResponse(Messages.Player.FOUND, teams);
         }
 
         // Get by past date
@@ -113,9 +128,24 @@ namespace server.Controllers
 
             List<Game> games = new();
 
+            var gamesDB = db.Games.ToList();
+
+            int amountTeamsRegistered = db.Games.Where(v => v.Champeonshipid == body.Champeonshipid).Count();
+
+            if(amountTeamsRegistered > 0){
+                amountTeamsRegistered = amountTeamsRegistered*2;
+            }
+
+            bool createNewData = false;
+
             for (int i = 0; i < teams.Count(); i++)
             {
+
                 var localTeam = teams[i];
+
+                if (amountTeamsRegistered >= champeonShip.Amountteams) break;
+
+                createNewData=true;
 
                 int numerTeamsToDivision = teams.Count(v => v.Division.Name == localTeam.Division.Name);
 
@@ -128,6 +158,9 @@ namespace server.Controllers
                 for (int j = 0; j < teams.Count(); j++)
                 {
                     var visitorTeam = teams[j];
+
+                    if (amountTeamsRegistered >= champeonShip.Amountteams) break;
+
                     if (localTeam.Id == visitorTeam.Id) continue;
                     if (excludeTeamsId.Contains(visitorTeam.Id)) continue;
                     if (localTeam.Division.Name != visitorTeam.Division.Name) continue;
@@ -150,6 +183,8 @@ namespace server.Controllers
 
                     games.Add(game);
 
+                    amountTeamsRegistered += 2;
+
                     break;
 
                 }
@@ -157,21 +192,23 @@ namespace server.Controllers
 
             }
 
+            if(!createNewData) return res.BadRequestResponse(Messages.Game.LIMITTEAMS);
+            
             return res.SuccessResponse(Messages.Game.CREATED, games);
         }
 
 
         // PUT: api/Game/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(int id, GameDto body)
+        public IActionResult PutGame(int id, GamePutDto body)
         {
             var game = db.Games.Find(id);
             if (game == null) return res.NotFoundResponse(Messages.Game.NOTFOUND);
 
             game.Champeonshipid = body.Champeonshipid;
             game.Date = body.Date;
-            game.Localteamid = body.Localteamid;
-            game.Visitorteamid = body.Visitorteamid;
+            game.Localteamid = game.Localteamid;
+            game.Visitorteamid = game.Visitorteamid;
             game.AmountGoalsVisitor = body.AmountGoalsVisitor;
             game.AmountGoalsLocal = body.AmountGoalsLocal;
 

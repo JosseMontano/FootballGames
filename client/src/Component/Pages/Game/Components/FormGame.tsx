@@ -8,7 +8,10 @@ import { PostGame, PutGame } from "../Services/game";
 import toast from "react-hot-toast";
 import useFetch from "../../../../Global/hooks/UseFetch";
 import { TeamResType } from "../../Team/Res/TeamRes";
-import { getTeams } from "../../../../Shared/Services/Team";
+import {
+  getTeams,
+  getTeamsWithoutChampeonship,
+} from "../../../../Shared/Services/Team";
 import FormComponent from "../../../../Global/components/Form";
 import Input from "../../../../Global/components/Input";
 import SelectComp from "../../../../Global/components/Select";
@@ -27,18 +30,24 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<GameFormDto>({
     resolver: zodResolver(GameFormDtoSchema),
     defaultValues: game,
   });
 
+  // Watch the value of the champeonshipid field
+  const champeonshipidValue = watch("champeonshipid") || game.champeonshipid || 1;
+
   //vars form
   const isEdit = Object.keys(game).length > 0;
+
   const title = isEdit ? "Editar juego" : "Crear juego";
   const btn = isEdit ? "Editar" : "Crear";
 
   const [loader, setLoader] = useState(false);
+
 
   const handleForm = async (data: GameFormDto) => {
     setLoader(true);
@@ -58,7 +67,8 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
   };
 
   const { data: localTeamsData } = useFetch<TeamResType>({
-    services: getTeams,
+    services: getTeamsWithoutChampeonship,
+    id: Number(champeonshipidValue),
   });
 
   const showLocalTeamsJSX = () => {
@@ -70,7 +80,8 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
   };
 
   const { data: visitorTeamsData } = useFetch<TeamResType>({
-    services: getTeams,
+    services: getTeamsWithoutChampeonship,
+    id: Number(champeonshipidValue),
   });
 
   const showVisitorTeamsJSX = () => {
@@ -107,20 +118,23 @@ const FormGame = ({ handleCloseModal, game, getDataGames }: Props) => {
             label="Campeonato"
             showJSX={() => showChampeonshipJSX()}
           />
+          {Number(champeonshipidValue) > 0 && !isEdit && (
+            <>
+              <SelectComp
+                register={register("localteamid")}
+                error={errors.localteamid}
+                label="Equipo local"
+                showJSX={() => showLocalTeamsJSX()}
+              />
 
-          <SelectComp
-            register={register("localteamid")}
-            error={errors.localteamid}
-            label="Equipo local"
-            showJSX={() => showLocalTeamsJSX()}
-          />
-
-          <SelectComp
-            register={register("visitorteamid")}
-            error={errors.visitorteamid}
-            label="Equipo visitante"
-            showJSX={() => showVisitorTeamsJSX()}
-          />
+              <SelectComp
+                register={register("visitorteamid")}
+                error={errors.visitorteamid}
+                label="Equipo visitante"
+                showJSX={() => showVisitorTeamsJSX()}
+              />
+            </>
+          )}
 
           <Input
             error={errors.date}

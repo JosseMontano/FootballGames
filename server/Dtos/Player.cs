@@ -1,27 +1,14 @@
-
-
 namespace server.Dtos;
 
-public partial class GameDto
+public class PlayerDto
 {
+    public required string Ci { get; set; }
+    public required string Names { get; set; }
+    public required string Lastnames { get; set; }
+    public required DateOnly Date { get; set; }
+    public required string Cellphone { get; set; }
+    public required string Photo { get; set; }
 
-    public int? Localteamid { get; set; }
-
-    public int? Visitorteamid { get; set; }
-
-    public int? Champeonshipid { get; set; }
-    public int? AmountGoalsLocal { get; set; } = null;
-    public int? AmountGoalsVisitor { get; set; } = null;
-
-    public DateOnly Date { get; set; }
+    public required int Teamid { get; set; }
 
 }
-
-
-public partial class GamesRandomsDto
-{
-    public int? Champeonshipid { get; set; }
-
-
-}
-
