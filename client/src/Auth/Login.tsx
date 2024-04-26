@@ -133,7 +133,7 @@ function Login() {
               ) : (
                 <BtnLoader txt={msgBtnForm} />
               )}
-              <p className="flex justify-start gap-2">
+         {/*      <p className="flex justify-start gap-2">
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}
                 </p>
@@ -141,7 +141,7 @@ function Login() {
                   onClick={() => navigate("/signup")}
                   txt="Sign up"
                 />
-              </p>
+              </p> */}
 
               <button
                 aria-label="Continue with google"

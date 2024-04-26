@@ -45,6 +45,7 @@ namespace server.Constants
             public static string CREATED { get; } = "Jugador registrado correctamente";
             public static string UPDATED { get; } = "Jugador actualizado exitosamente";
             public static string DELETED { get; } = "Jugador eliminado exitosamente";
+            public static string EXISTS { get; } = "El jugador ya esta registrado en otro equipo";
         }
 
         public static class Game

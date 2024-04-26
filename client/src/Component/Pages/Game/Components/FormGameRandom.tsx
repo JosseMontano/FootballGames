@@ -17,6 +17,7 @@ import BtnLoader from "../../../../Global/components/BtnLoader";
 import { getChampeons } from "../../Champeonship/Services/ChampeonShip";
 import { ChampeonRes } from "../../Champeonship/Res/ChampeonRes";
 import { GameRandomFormDtoSchema } from "../Validations/FormGameRandom";
+import { getDivisions } from "../../Divisions/Services/Divisions";
 
 interface Props {
   handleCloseModal: () => void;
@@ -54,6 +55,7 @@ const FormGameRandom = ({ handleCloseModal, game, getDataGames }: Props) => {
     setLoader(false);
   };
 
+  //fetch champeons
   const { data: champeonshipData } = useFetch<ChampeonRes>({
     services: getChampeons,
   });
@@ -61,6 +63,19 @@ const FormGameRandom = ({ handleCloseModal, game, getDataGames }: Props) => {
   const showChampeonshipJSX = () => {
     return champeonshipData.map((v) => (
       <option value={v.id} selected={v.id == game.champeonshipid}>
+        {v.name}
+      </option>
+    ));
+  };
+
+  //fetch divisions
+  const { data: divisionData } = useFetch<ChampeonRes>({
+    services: getDivisions,
+  });
+
+  const showDivisionJSX = () => {
+    return divisionData.map((v) => (
+      <option value={v.id}>
         {v.name}
       </option>
     ));
@@ -79,6 +94,12 @@ const FormGameRandom = ({ handleCloseModal, game, getDataGames }: Props) => {
             error={errors.champeonshipid}
             label="Campeonato"
             showJSX={() => showChampeonshipJSX()}
+          />
+          <SelectComp
+            register={register("divisionid")}
+            error={errors.divisionid}
+            label="Division"
+            showJSX={() => showDivisionJSX()}
           />
         </div>
       </div>

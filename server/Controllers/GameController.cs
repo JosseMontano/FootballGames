@@ -104,7 +104,7 @@ namespace server.Controllers
         [HttpPost("Register-random-game")]
         public IActionResult RegisterRandomGame(GamesRandomsDto body)
         {
-            var teams = db.Teams.Include(v => v.Division).ToList();
+            var teams = db.Teams.Include(v => v.Division).Where(v=>v.DivisionId == body.Divisionid).ToList();
 
             // Shuffle teams
             Random rng = new Random();
@@ -189,7 +189,6 @@ namespace server.Controllers
 
                 }
                 db.SaveChanges();
-
             }
 
             if(!createNewData) return res.BadRequestResponse(Messages.Game.LIMITTEAMS);

@@ -9,4 +9,5 @@ export interface GameFormDto {
 
 export const GameRandomFormDtoSchema = z.object({
   champeonshipid: z.number().or(z.string()),
+  divisionid: z.number().or(z.string()),
 });

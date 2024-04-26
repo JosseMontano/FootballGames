@@ -49,6 +49,11 @@ namespace server.Controllers
         public IActionResult Create(PlayerDto body)
         {
 
+            //search if the player already exists in other team
+            var playerExists = db.Players.FirstOrDefault(v => v.Ci == body.Ci);
+
+            if (playerExists != null) return res.BadRequestResponse(Messages.Player.EXISTS);
+
             DateOnly date = body.Date;
             int age = DateTime.Now.Year - date.Year;
 

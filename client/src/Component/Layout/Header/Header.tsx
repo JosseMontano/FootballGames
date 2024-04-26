@@ -66,14 +66,19 @@ const SIDEBAR_TABS = [
   { name: "Jugador", path: "/player" },
 ];
 
+type redirectType = "/login" | "/";
+
 const Header = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const {logout} = useAuth()
-  const handleLogOut = () => {
-    logout();
-    navigate("/login");
-    localStorage.clear();
+  const { logout } = useAuth();
+
+  const handleRedirect = (redirectType: redirectType) => {
+    navigate(redirectType);
+    if (redirectType == "/login") {
+      logout();
+      localStorage.clear();
+    }
   };
 
   const handleTabClick = (path: string) => {
@@ -89,9 +94,9 @@ const Header = () => {
             aria-label="Global"
           >
             <div className="flex lg:flex-1">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a onClick={()=>handleRedirect("/")} href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">React Mania</span>
-               <Logo size="30px"/>  
+                <Logo size="30px" />
               </a>
             </div>
             <div className="flex lg:hidden">
@@ -104,7 +109,7 @@ const Header = () => {
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
-    {/*         <Popover.Group className="hidden lg:flex lg:gap-x-12">
+            {/*         <Popover.Group className="hidden lg:flex lg:gap-x-12">
               <Popover className="relative">
                 <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
                   Product
@@ -192,7 +197,7 @@ const Header = () => {
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a
                 className="cursor-pointer text-sm font-semibold leading-6 text-gray-900"
-                onClick={handleLogOut}
+                onClick={()=>handleRedirect("/login")}
               >
                 Log out <span aria-hidden="true">&rarr;</span>
               </a>
@@ -287,7 +292,7 @@ const Header = () => {
                   </div>
                   <div className="py-6">
                     <a
-                      onClick={handleLogOut}
+                      onClick={()=>handleRedirect("/login")}
                       className="cursor-pointer -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     >
                       Log out

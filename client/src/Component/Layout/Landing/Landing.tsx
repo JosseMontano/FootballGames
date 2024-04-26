@@ -19,6 +19,7 @@ import { dataGamesType, filterGamesType } from "./Types/filterGames";
 import { getFutureGames, getPastGames } from "./Services/game";
 import { GameRes } from "../../Pages/Game/Res/GameRes";
 import TableGame from "./Components/tableGames";
+import { useAuth } from "../../../Global/Context/UseAuth";
 
 const navigation = [
   { name: "Example1", href: "#" },
@@ -29,6 +30,8 @@ const navigation = [
 
 export default function Landing() {
   const navigate = useNavigate();
+
+  const { user, isLogged } = useAuth();
 
   const { redirect } = UseRouter();
 
@@ -153,12 +156,23 @@ export default function Landing() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a
-              onClick={() => handleLoginClick()}
-              className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {isLogged && (
+              <a
+                onClick={() => navigate("/Welcome")}
+                className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
+              >
+                Dashboard <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
+
+            {!isLogged && (
+              <a
+                onClick={() => handleLoginClick()}
+                className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
           </div>
         </nav>
         <Dialog

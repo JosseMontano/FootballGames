@@ -11,6 +11,7 @@ export interface GamesRandomFormDto{
     localteamid: number;
     visitorteamid: number;
     champeonshipid: number;
+    divisionid?: number;
     amountGoalsLocal?: number;
     amountGoalsVisitor?: number;
     date: string;
