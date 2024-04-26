@@ -98,11 +98,8 @@ const Game = () => {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-3">
-        <BtnBasic onClick={handleCreateGame} txt="Crear datos" />
-        <BtnBasic
-          onClick={handleCreateGameRandomic}
-          txt="Generar aleatoriamente"
-        />
+        {/*         <BtnBasic onClick={handleCreateGame} txt="Crear datos" /> */}
+        <BtnBasic onClick={handleCreateGameRandomic} txt="Generar partidos" />
       </div>
 
       {ShowModalJSX(

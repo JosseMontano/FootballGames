@@ -104,7 +104,10 @@ namespace server.Controllers
         [HttpPost("Register-random-game")]
         public IActionResult RegisterRandomGame(GamesRandomsDto body)
         {
-            var teams = db.Teams.Include(v => v.Division).Where(v=>v.DivisionId == body.Divisionid).ToList();
+            var teams = db.Teams.Include(v => v.Division).Where(v => v.DivisionId == body.Divisionid).ToList();
+
+            if (teams.Count % 2 == 1)
+                return res.BadRequestResponse(Messages.Game.ODDTEAMS);
 
             // Shuffle teams
             Random rng = new Random();
@@ -132,8 +135,9 @@ namespace server.Controllers
 
             int amountTeamsRegistered = db.Games.Where(v => v.Champeonshipid == body.Champeonshipid).Count();
 
-            if(amountTeamsRegistered > 0){
-                amountTeamsRegistered = amountTeamsRegistered*2;
+            if (amountTeamsRegistered > 0)
+            {
+                amountTeamsRegistered = amountTeamsRegistered * 2;
             }
 
             bool createNewData = false;
@@ -145,7 +149,7 @@ namespace server.Controllers
 
                 if (amountTeamsRegistered >= champeonShip.Amountteams) break;
 
-                createNewData=true;
+                createNewData = true;
 
                 int numerTeamsToDivision = teams.Count(v => v.Division.Name == localTeam.Division.Name);
 
@@ -191,8 +195,8 @@ namespace server.Controllers
                 db.SaveChanges();
             }
 
-            if(!createNewData) return res.BadRequestResponse(Messages.Game.LIMITTEAMS);
-            
+            if (!createNewData) return res.BadRequestResponse(Messages.Game.LIMITTEAMS);
+
             return res.SuccessResponse(Messages.Game.CREATED, games);
         }
 

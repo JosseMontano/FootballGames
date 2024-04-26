@@ -56,6 +56,7 @@ namespace server.Constants
             public static string LIMITTEAMS { get; } = "Ya paso el limite de equipos en el campeonato";
             public static string UPDATED { get; } = "Partido actualizado exitosamente";
             public static string DELETED { get; } = "Partido eliminado exitosamente";
+            public static string ODDTEAMS { get; } = "La cantida de equipos debe ser par";
         }
 
         public static class Championship
