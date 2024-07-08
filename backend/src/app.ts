@@ -3,7 +3,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
-import authRouter from "../src/auth/auth.controller"
+import authRouter from "./app/auth/auth.controller"
 
 // Express configuration
 const app = express(); // New express instance
