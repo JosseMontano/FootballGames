@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const router = Router();
 
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/auth/register', async (req: Request, res: Response) => {
     const { gmail, password, confirmPassword } = req.body;
 
     try {
@@ -31,7 +31,7 @@ router.post('/register', async (req: Request, res: Response) => {
 )
 
 
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/auth/login', async (req: Request, res: Response) => {
     const { gmail, password } = req.body;
 
     try {
@@ -46,7 +46,14 @@ router.post('/login', async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ id: user.Id }, 'your_secret_key', { expiresIn: '1h' });
-        res.json({ token });
+        const response = {
+            message: "Login successful",
+            data:{
+                token
+            },
+            status: 200
+        }
+        res.json(response);
     } catch (error) {
         if (error instanceof Error)
             res.status(500).json({ message: "Server error" + error.message });

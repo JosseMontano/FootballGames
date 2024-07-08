@@ -61,6 +61,7 @@ function Login() {
     setLoader(true);
     const res = await loginService(data);
     const thereIsToken = res.data.token;
+    console.log('res', res);
     if (thereIsToken) {
       localStorage.setItem("token", thereIsToken);
       const user: UserAuth = {
