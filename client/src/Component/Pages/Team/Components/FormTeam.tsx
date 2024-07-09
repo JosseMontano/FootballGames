@@ -42,7 +42,7 @@ const FormTeam = ({ handleCloseModal, team, getDataTeams }: Props) => {
     } else {
       res = await PostTeam(data);
     }
-    if (res.status == 200) {
+    if (res.status == 201 || res.status == 200) {
       await getDataTeams();
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();

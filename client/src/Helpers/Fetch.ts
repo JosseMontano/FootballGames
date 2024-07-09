@@ -14,9 +14,12 @@ export const postData = async <T, R>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "accept": "application/json",
       },
       body: JSON.stringify(data),
     });
+    console.log(response);
+    
 
     const res = await response.json();
     status = res.status;
@@ -50,6 +53,7 @@ export const getData = async <T>(
     });
 
     const res = await response.json();
+    
     status = res.status;
     msg = res.message;
     json = res.data;

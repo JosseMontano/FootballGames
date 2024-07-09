@@ -37,7 +37,7 @@ const FormDivision = ({ division, getDataTeams, handleCloseModal }: Props) => {
     } else {
       res = await PostDivision(data);
     }
-    if (res.status == 200) {
+    if (res.status == 201 || res.status == 200) {
       await getDataTeams();
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();

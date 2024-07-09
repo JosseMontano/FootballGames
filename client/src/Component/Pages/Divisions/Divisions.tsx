@@ -43,7 +43,7 @@ const Divisions = ({}: Props) => {
 
   const bodyTableJSX = () => {
     return teams.map((v) => (
-      <tr>
+      <tr key={v.id}>
         <td>{v.name}</td>
 
         <td className="px-6 py-4 whitespace-nowrap">
