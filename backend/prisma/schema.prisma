@@ -22,18 +22,29 @@ model User {
 }
 
 model Team {
-  id              Int          @id @default(autoincrement())
-  name            String       @unique
-  created         DateTime     @default(now())
-  updated         DateTime     @updatedAt
-  division     TeamDivision? @relation(fields: [teamDivisionId], references: [id])
-  teamDivisionId  Int?          
+  id             Int           @id @default(autoincrement())
+  name           String        @unique
+  created        DateTime      @default(now())
+  updated        DateTime      @updatedAt
+  division       TeamDivision? @relation(fields: [teamDivisionId], references: [id])
+  teamDivisionId Int?
 }
 
 model TeamDivision {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  created   DateTime @default(now())
-  updated   DateTime @updatedAt
-  teams     Team[]
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  teams   Team[]
+}
+
+model Championship {
+  id          Int      @id @default(autoincrement())
+  name        String
+  amountteams Int
+  type        String
+  datestart   DateTime
+  dateend     DateTime
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
 }

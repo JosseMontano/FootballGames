@@ -42,7 +42,7 @@ const FormChampeon = ({
     } else {
       res = await PostChampeon(data);
     }
-    if (res.status == 200) {
+    if (res.status == 200 || res.status == 201) {
       await getDataChampeon();
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();
