@@ -4,7 +4,7 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 import authRouter from "./app/auth/auth.controller"
-
+import teamRouter from "./app/team/team.controller"
 // Express configuration
 const app = express(); // New express instance
 const port = 8000; // Port number
@@ -20,5 +20,6 @@ app.listen(port, () => {
 });
 
 app.use(authRouter);
+app.use(teamRouter)
 
 export default app;

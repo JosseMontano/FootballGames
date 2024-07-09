@@ -14,9 +14,16 @@ datasource db {
 }
 
 model User {
-  Id       Int    @id @default(autoincrement())
-  Gmail    String @unique
-  Password String
-  Created  DateTime @default(now())
-  Updated  DateTime @updatedAt
+  id       Int      @id @default(autoincrement())
+  gmail    String   @unique
+  password String
+  created  DateTime @default(now())
+  updated  DateTime @updatedAt
+}
+
+model Team {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 }
