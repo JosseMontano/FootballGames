@@ -48,7 +48,7 @@ const FormPlayer = ({ handleCloseModal, player, getDataPlayers }: Props) => {
       res = await PostPlayer(data);
     }
     
-    if (res.status == 200) {
+    if (res.status == 200 || res.status == 201) {
       await getDataPlayers();
       toast.success(res.message, { duration: 3000 });
       handleCloseModal();

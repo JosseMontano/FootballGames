@@ -28,6 +28,7 @@ model Team {
   updated        DateTime      @updatedAt
   division       TeamDivision? @relation(fields: [teamDivisionId], references: [id])
   teamDivisionId Int?
+  players        Player[]
 }
 
 model TeamDivision {
@@ -47,4 +48,19 @@ model Championship {
   dateend     DateTime
   created     DateTime @default(now())
   updated     DateTime @updatedAt
+}
+
+model Player {
+  id        Int      @id @default(autoincrement())
+  ci        String   @unique
+  names     String
+  lastnames String
+  age       Int
+  date      DateTime
+  cellphone String
+  photo     String
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  team       Team? @relation(fields: [teamId], references: [id])
+  teamId Int
 }

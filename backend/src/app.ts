@@ -7,7 +7,7 @@ import authRouter from "./app/auth/auth.controller"
 import teamRouter from "./app/team/team.controller"
 import divisionRouter from "./app/teamDivisiones/teamDivisiones.controller"
 import champeonshipRouter from "./app/champeonship/champeonship.controller"
-
+import playerRouter from "./app/player/player.controller"
 // Express configuration
 const app = express(); // New express instance
 const port = 8000; // Port number
@@ -27,9 +27,11 @@ app.listen(port, () => {
   console.log(`Generate your pdf's http://localhost:${port} 🚀🚀🚀`);
 });
 
+//routes
 app.use(authRouter);
 app.use(teamRouter)
 app.use(divisionRouter)
 app.use(champeonshipRouter)
+app.use(playerRouter)
 
 export default app;
