@@ -22,16 +22,18 @@ app.use(helmet()); // Enable Helmet
 app.use(morgan("dev")); // Enable Morgan
 app.use(bodyParser.json());
 
-// Start Express server
-app.listen(port, () => {
-  console.log(`Generate your pdf's http://localhost:${port} 🚀🚀🚀`);
-});
-
 //routes
 app.use(authRouter);
 app.use(teamRouter)
 app.use(divisionRouter)
 app.use(champeonshipRouter)
 app.use(playerRouter)
+
+
+// Start Express server
+app.listen(port, () => {
+  console.log(`Generate your pdf's http://localhost:${port} 🚀🚀🚀`);
+});
+
 
 export default app;

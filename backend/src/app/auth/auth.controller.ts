@@ -5,6 +5,9 @@ import { compareHashedString, hashedString } from "../../helpers/hashedString";
 import { config } from "../../config";
 import { AuthDTO } from "./auth.dto";
 import { ResponseType } from "../../interfaces/response";
+import { loginSchema, registerSchema } from "./auth.validations";
+import { z } from "zod";
+
 
 const prisma = new PrismaClient();
 
@@ -13,17 +16,14 @@ const router = Router();
 const endpoint = "/auth/";
 
 router.post(endpoint + 'register', async (req: Request, res: Response) => {
-    const { gmail, password, confirmPassword } = req.body as AuthDTO;
+    const { gmail, password } = req.body as AuthDTO;
 
     try {
+        registerSchema.parse(req.body);
         const user = await prisma.user.findUnique({ where: { gmail: gmail } });
 
         if (user) {
             return res.status(400).json({ message: "User already exists" });
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Passwords do not match" });
         }
 
         const hashedPassword = hashedString(password);
@@ -39,10 +39,16 @@ router.post(endpoint + 'register', async (req: Request, res: Response) => {
             },
             status: 201
         }
-        res.json(response);
-    } catch (error) {
-        if (error instanceof Error)
-            return res.status(500).json({ message: "Server error" + error.message });
+       return res.json(response);
+    } catch (e) {
+        if (e instanceof z.ZodError) {
+            const errors = e.errors.map(err => err.message); // Extract error messages
+            return res.status(400).send({ errors });
+        }
+        if (e instanceof Error) {
+            console.log(e.message);
+            return res.status(500).json({ message: "Error del servidor" + e.message });
+        }
     }
 }
 )
@@ -52,6 +58,8 @@ router.post(endpoint + 'login', async (req: Request, res: Response) => {
     const { gmail, password } = req.body as AuthDTO;
 
     try {
+        loginSchema.parse(req.body);
+
         const user = await prisma.user.findUnique({ where: { gmail: gmail } });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -64,16 +72,23 @@ router.post(endpoint + 'login', async (req: Request, res: Response) => {
 
         const token = jwt.sign({ id: user.id }, config.tokenSecret, { expiresIn: '1h' });
         const response: ResponseType = {
-            message: "Login successful",
+            message: "Login exitoso!",
             data: {
                 token
             },
             status: 200
         }
-        res.json(response);
-    } catch (error) {
-        if (error instanceof Error)
-            res.status(500).json({ message: "Server error" + error.message });
+        return res.json(response);
+    } catch (e) {
+        if (e instanceof z.ZodError) {
+            const errors = e.errors.map(err => err.message); // Extract error messages
+            return res.status(400).send({ errors });
+        }
+        if (e instanceof Error) {
+            console.log(e.message);
+            return res.status(500).json({ message: "Error del servidor" + e.message });
+        }
+
     }
 });
 
